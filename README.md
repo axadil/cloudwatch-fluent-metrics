@@ -140,15 +140,7 @@ m.elapsed(MetricName='Job2CompletionTime', TimerName='job2')
 finish_workflow()
 m.elapsed(MetricName='WorkflowCompletionTime', TimerName='workflow')
 ```
-#### Metric Stream ID
-A key feature of `FluentMetrics` is the metric stream ID. This ID will be added as a dimension and logged with every metric. The benefit of this dimension is to provide a distinct stream of metrics for an end-to-end operation. When you create a new instance of `FluentMetric`, you can either pass in your own value or `FluentMetrics` will generate a GUID. In CloudWatch, you can then see all of the metrics for a particular stream ID in chronological order. A metric stream can be a job, or a server or any way that you want to unique group a contiguous stream of metrics.
-*Example*:
-In this example, we'll have two metrics in the `Performance` namespace, each with metric stream ID of `abc-123`. We can then go to CloudWatch and filter by that stream ID to see the entire operation performance at a glance.
-```sh
-m = FluentMetric().with_namespace('Performance').with_stream_id('abc-123')
-m.log(MetricName='StartupTime', Value=100, Unit='Seconds')
-do_work()
-m.log(MetricName='WorkCompleted', Value=1000, Unit='Milliseconds')
+
 ```
 ## Use Case Quickstart
 #### #1: Least Amount of Code Required to Log a Metric
