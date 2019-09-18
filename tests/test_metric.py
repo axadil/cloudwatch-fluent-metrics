@@ -14,7 +14,7 @@
 
 import arrow
 import time
-from fluentmetrics import FluentMetric
+from fluentmetrics import FluentMetric, BufferedFluentMetric
 import mock
 from moto import mock_cloudwatch
 
@@ -104,9 +104,9 @@ def test_can_push_dimensions():
     m.with_dimension(test_name, test_value)
     assert m.does_dimension_exist(test_name)
     m.push_dimensions()
-    assert len(m.dimensions) == 1
+    assert len(m.dimensions) == 0
     m.pop_dimensions()
-    assert len(m.dimensions) == 2
+    assert len(m.dimensions) == 1
 
 
 @mock.patch('fluentmetrics.FluentMetric.log')
@@ -119,3 +119,11 @@ def test_can_log_count(fm_log):
 def test_can_set_resolution():
     m = FluentMetric().with_namespace('Performance').with_storage_resolution(1)
     assert m.storage_resolution == 1
+
+
+@mock_cloudwatch
+def test_():
+    metrics = BufferedFluentMetric()
+    metrics.with_namespace("test")
+    metrics.count(MetricName="test", Value=3)
+    metrics.flush()

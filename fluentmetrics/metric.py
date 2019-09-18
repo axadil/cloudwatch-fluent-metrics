@@ -325,8 +325,7 @@ class FluentMetric(object):
         return self
 
     def log(self, **kwargs):
-        ts = kwargs.get('TimeStamp', arrow.utcnow()
-                        .format('YYYY-MM-DD HH:mm:ss ZZ'))
+        ts = kwargs.get('TimeStamp', arrow.utcnow().datetime)
         value = float(kwargs.get('Value'))
         unit = kwargs.get('Unit')
         md = []
